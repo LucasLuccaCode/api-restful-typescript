@@ -40,12 +40,24 @@ const transports = [
     level: 'error'
   }),
   new winston.transports.File({
+    filename: 'logs/warn.log',
+    level: 'warn'
+  }),
+  new winston.transports.File({
     filename: 'logs/info.log',
     level: 'info'
   }),
   new winston.transports.File({
-    filename: 'logs/all.log'
-  })
+    filename: 'logs/http.log',
+    level: 'http'
+  }),
+  new winston.transports.File({
+    filename: 'logs/debug.log',
+    level: 'debug'
+  }),
+  // new winston.transports.File({
+  //   filename: 'logs/all.log'
+  // })
 ]
 
 const Logger = winston.createLogger({

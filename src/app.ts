@@ -2,18 +2,27 @@
 require('dotenv').config()
 
 import express, { Request, Response } from 'express'
-import config from 'config'
+
+// routes
 import routes from './routes'
+
+// Middlewares
+import morganMiddleware from './middlewares/morganMiddleware'
+
+// config
+import config from 'config'
 import db from '../config/db'
 import Logger from '../config/logger'
 
 const app = express()
-// app port
 const PORT = config.get<number>('port')
 
 // JSON middleware
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+
+// morgan
+app.use(morganMiddleware)
 
 // routes
 app.use('/api', routes)
