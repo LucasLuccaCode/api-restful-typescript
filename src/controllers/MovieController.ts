@@ -75,4 +75,36 @@ export default class MovieController {
       res.status(500).json({ error: "Por favor, tente mais tarde." })
     }
   }
+
+
+  static async updateMovie(req: Request, res: Response) {
+    try {
+      const { movieId } = req.params
+      const { title, rating, description, director, stars, poster } = req.body
+
+      const movie = await Movie.findById(movieId)
+
+      if (!movie) {
+        return res.status(404).json({ error: "O filme não existe" })
+      }
+
+      const data = {
+        title,
+        rating,
+        description,
+        director,
+        stars,
+        poster
+      }
+
+      await movie.update({ $set: data })
+      
+      const updatedMovie = await Movie.findById(movieId)
+
+      res.status(200).json(updatedMovie)
+    } catch (error: any) {
+      Logger.error(`Erro no sistema: ${error.message}`)
+      res.status(500).json({ error: "Por favor, tente mais tarde." })
+    }
+  }
 }

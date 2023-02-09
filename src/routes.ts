@@ -20,5 +20,6 @@ router.route('/movie')
 router.route('/movie/:movieId')
   .get(MovieController.getMovieById)
   .delete(MovieController.deleteMovie)
+  .patch(movieCreateValidation(), validator, MovieController.updateMovie)
 
 export default router
