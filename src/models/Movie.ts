@@ -2,22 +2,28 @@ import { Schema, model } from 'mongoose'
 
 const movieSchema = new Schema({
   title: {
-    type: String
+    type: String,
+    required: true
   },
   rating: {
-    type: Number
+    type: Number,
+    required: true
   },
   description: {
-    type: String
+    type: String,
+    required: true
   },
   director: {
-    type: String
+    type: String,
+    required: true
   },
   stars: {
-    type: Array
+    type: Array,
+    required: true
   },
   poster: {
-    type: String
+    type: String,
+    required: true
   }
 }, {
   timestamps: true
