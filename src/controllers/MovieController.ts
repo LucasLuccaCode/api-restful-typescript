@@ -33,9 +33,24 @@ export default class MovieController {
     try {
       const { movieId } = req.params
 
-      const movie = await Movie.findById(movieId, { __v: 0 })
+      const movie = await Movie.findById(movieId)
+
+      if (!movie) {
+        return res.status(404).json({ error: "O filme não existe" })
+      }
 
       res.status(200).json(movie)
+    } catch (error: any) {
+      Logger.error(`Erro no sistema: ${error.message}`)
+      res.status(500).json({ error })
+    }
+  }
+
+  static async getAllMovies(req: Request, res: Response) {
+    try {
+      const movies = await Movie.find()
+
+      res.status(200).json(movies)
     } catch (error: any) {
       Logger.error(`Erro no sistema: ${error.message}`)
       res.status(500).json({ error })
