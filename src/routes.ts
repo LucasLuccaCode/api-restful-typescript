@@ -14,5 +14,6 @@ router.get('/test', (req: Request, res: Response) => {
 })
 
 router.post('/movie', movieCreateValidation(), validator, MovieController.createMovie)
+router.get('/movie/:movieId', MovieController.getMovieById)
 
 export default router
