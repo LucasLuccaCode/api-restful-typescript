@@ -25,7 +25,7 @@ export default class MovieController {
       res.status(201).json(movie)
     } catch (error: any) {
       Logger.error(`Erro no sistema: ${error.message}`)
-      res.status(500).json({ error })
+      res.status(500).json({ error: "Por favor, tente mais tarde." })
     }
   }
 
@@ -42,7 +42,7 @@ export default class MovieController {
       res.status(200).json(movie)
     } catch (error: any) {
       Logger.error(`Erro no sistema: ${error.message}`)
-      res.status(500).json({ error })
+      res.status(500).json({ error: "Por favor, tente mais tarde." })
     }
   }
 
@@ -53,7 +53,26 @@ export default class MovieController {
       res.status(200).json(movies)
     } catch (error: any) {
       Logger.error(`Erro no sistema: ${error.message}`)
-      res.status(500).json({ error })
+      res.status(500).json({ error: "Por favor, tente mais tarde." })
+    }
+  }
+
+  static async deleteMovie(req: Request, res: Response) {
+    try {
+      const { movieId } = req.params
+
+      const movie = await Movie.findById(movieId)
+
+      if (!movie) {
+        return res.status(404).json({ error: "O filme não existe" })
+      }
+
+      await movie.remove()
+
+      res.status(200).json({ message: "Filme deletado." })
+    } catch (error: any) {
+      Logger.error(`Erro no sistema: ${error.message}`)
+      res.status(500).json({ error: "Por favor, tente mais tarde." })
     }
   }
 }

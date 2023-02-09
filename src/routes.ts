@@ -17,6 +17,8 @@ router.route('/movie')
   .get(MovieController.getAllMovies)
   .post(movieCreateValidation(), validator, MovieController.createMovie)
 
-router.get('/movie/:movieId', MovieController.getMovieById)
+router.route('/movie/:movieId')
+  .get(MovieController.getMovieById)
+  .delete(MovieController.deleteMovie)
 
 export default router
