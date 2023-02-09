@@ -18,8 +18,7 @@ const movieSchema = new Schema({
     required: true
   },
   stars: {
-    type: Array,
-    required: true
+    type: Array
   },
   poster: {
     type: String,

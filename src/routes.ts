@@ -4,6 +4,7 @@ import { Request, Response, Router } from 'express'
 import MovieController from './controllers/MovieController'
 
 // validators
+import { movieCreateValidation } from './middlewares/movieValidation'
 import { validator } from './middlewares/handleValidations'
 
 const router = Router()
@@ -12,6 +13,6 @@ router.get('/test', (req: Request, res: Response) => {
   res.status(200).send('API Working!')
 })
 
-router.post('/movie', validator, MovieController.createMovie)
+router.post('/movie', movieCreateValidation(), validator, MovieController.createMovie)
 
 export default router
