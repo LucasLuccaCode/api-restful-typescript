@@ -1,4 +1,4 @@
-import { Request, Response, Router } from 'express'
+import { Router } from 'express'
 
 // Controller
 import MovieController from './controllers/MovieController'
@@ -8,10 +8,6 @@ import { movieCreateValidation } from './middlewares/movieValidation'
 import { validator } from './middlewares/handleValidations'
 
 const router = Router()
-
-router.get('/test', (req: Request, res: Response) => {
-  res.status(200).send('API Working!')
-})
 
 router.route('/movie')
   .get(MovieController.getAllMovies)

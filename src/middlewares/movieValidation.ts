@@ -3,7 +3,8 @@ import { body } from 'express-validator'
 export const movieCreateValidation = () => {
   return [
     body('title')
-      .isString()
+      .not()
+      .isEmpty()
       .withMessage('O título é obrigatório.')
       .isLength({ min: 5 })
       .withMessage('O título deve ter no mínimo 5 caracteres.'),
@@ -20,11 +21,13 @@ export const movieCreateValidation = () => {
       }),
 
     body('description')
-      .isString()
+      .not()
+      .isEmpty()
       .withMessage('A descrição é obrigatória.'),
 
     body('director')
-      .isString()
+      .not()
+      .isEmpty()
       .withMessage('O diretor é obrigatório.'),
 
     body('poster')

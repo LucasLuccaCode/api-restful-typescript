@@ -6,7 +6,7 @@ import express, { Request, Response } from 'express'
 // routes
 import routes from './routes'
 
-// Middlewares
+// middlewares
 import morganMiddleware from './middlewares/morganMiddleware'
 
 // config
@@ -37,7 +37,10 @@ db.once('open', () => {
   Logger.info('Connection established with database')
   app.emit('logged')
 })
-db.on('error', (Logger.error.bind('connection error:')));
+
+db.on('error', (error: Error) => {
+  Logger.error(`connection error: ${error.message}`)
+})
 
 // server start
 app.on('logged', () => {

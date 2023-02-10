@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import mongoose, { Schema, model } from 'mongoose'
 
 const movieSchema = new Schema({
   title: {
@@ -17,9 +17,7 @@ const movieSchema = new Schema({
     type: String,
     required: true
   },
-  stars: {
-    type: Array
-  },
+  stars: Array,
   poster: {
     type: String,
     required: true
@@ -28,4 +26,4 @@ const movieSchema = new Schema({
   timestamps: true
 })
 
-export const Movie = model('Movie', movieSchema)
+export const Movie = model<mongoose.Document>('Movie', movieSchema)

@@ -7,7 +7,7 @@ import { Movie } from '../models/Movie'
 import Logger from "../../config/logger";
 
 export default class MovieController {
-  static async createMovie(req: Request, res: Response) {
+  static async createMovie(req: Request, res: Response): Promise<Response> {
     try {
       const { title, rating, description, director, stars, poster } = req.body
 
@@ -22,71 +22,63 @@ export default class MovieController {
 
       const movie = await Movie.create(data)
 
-      res.status(201).json(movie)
+      return res.status(201).json(movie)
     } catch (error: any) {
       Logger.error(`Erro no sistema: ${error.message}`)
-      res.status(500).json({ error: "Por favor, tente mais tarde." })
+      return res.status(500).json({ error: "Por favor, tente mais tarde." })
     }
   }
 
-  static async getMovieById(req: Request, res: Response) {
+  static async getMovieById(req: Request, res: Response): Promise<Response> {
     try {
       const { movieId } = req.params
 
       const movie = await Movie.findById(movieId)
 
       if (!movie) {
-        return res.status(404).json({ error: "O filme não existe" })
+        return res.status(404).json({ error: "Filme não encontrado." })
       }
 
-      res.status(200).json(movie)
+      return res.status(200).json(movie)
     } catch (error: any) {
       Logger.error(`Erro no sistema: ${error.message}`)
-      res.status(500).json({ error: "Por favor, tente mais tarde." })
+      return res.status(500).json({ error: "Por favor, tente mais tarde." })
     }
   }
 
-  static async getAllMovies(req: Request, res: Response) {
+  static async getAllMovies(req: Request, res: Response): Promise<Response> {
     try {
       const movies = await Movie.find()
 
-      res.status(200).json(movies)
+      return res.status(200).json(movies)
     } catch (error: any) {
       Logger.error(`Erro no sistema: ${error.message}`)
-      res.status(500).json({ error: "Por favor, tente mais tarde." })
+      return res.status(500).json({ error: "Por favor, tente mais tarde." })
     }
   }
 
-  static async deleteMovie(req: Request, res: Response) {
+  static async deleteMovie(req: Request, res: Response): Promise<Response> {
     try {
       const { movieId } = req.params
 
-      const movie = await Movie.findById(movieId)
+      const movie = await Movie.findByIdAndDelete(movieId)
 
       if (!movie) {
-        return res.status(404).json({ error: "O filme não existe" })
+        return res.status(404).json({ error: "Filme não encontrado." })
       }
 
-      await movie.remove()
-
-      res.status(200).json({ message: "Filme deletado." })
+      return res.status(200).json({ message: "Filme deletado." })
     } catch (error: any) {
       Logger.error(`Erro no sistema: ${error.message}`)
-      res.status(500).json({ error: "Por favor, tente mais tarde." })
+      return res.status(500).json({ error: "Por favor, tente mais tarde." })
     }
   }
 
 
-  static async updateMovie(req: Request, res: Response) {
+  static async updateMovie(req: Request, res: Response): Promise<Response> {
     try {
       const { movieId } = req.params
       const { title, rating, description, director, stars, poster } = req.body
-
-      const movie = await Movie.findById(movieId)
-
-      if (!movie) {
-        return res.status(404).json({ error: "O filme não existe" })
-      }
 
       const data = {
         title,
@@ -97,14 +89,20 @@ export default class MovieController {
         poster
       }
 
-      await movie.update({ $set: data })
-      
-      const updatedMovie = await Movie.findById(movieId)
+      const updatedMovie = await Movie.findByIdAndUpdate(
+        movieId,
+        data,
+        { new: true }
+      )
 
-      res.status(200).json(updatedMovie)
+      if (!updatedMovie) {
+        return res.status(404).json({ error: 'Filme não encontrado.' });
+      }
+
+      return res.status(200).json(updatedMovie)
     } catch (error: any) {
       Logger.error(`Erro no sistema: ${error.message}`)
-      res.status(500).json({ error: "Por favor, tente mais tarde." })
+      return res.status(500).json({ error: "Por favor, tente mais tarde." })
     }
   }
 }
