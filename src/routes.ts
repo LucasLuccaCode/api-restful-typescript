@@ -9,11 +9,11 @@ import { validator } from './middlewares/handleValidations'
 
 const router = Router()
 
-router.route('/movie')
+router.route('/movies')
   .get(MovieController.getAllMovies)
   .post(movieCreateValidation(), validator, MovieController.createMovie)
 
-router.route('/movie/:movieId')
+router.route('/movies/:movieId')
   .get(MovieController.getMovieById)
   .delete(MovieController.deleteMovie)
   .patch(movieCreateValidation(), validator, MovieController.updateMovie)
