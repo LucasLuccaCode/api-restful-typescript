@@ -1,4 +1,4 @@
-# API Express, TypeScript, MongoDB, Express-Validator, Winston-Logger
+# API RESTFUL TYPESCRIPT
 API construída com Express, TypeScript, MongoDB. Ela fornece rotas para criar, obter, atualizar e deletar filmes. E outras funcionalidades(gerenciamento de logs e validações de dados de entrada).
 
 ## Instalação
@@ -63,4 +63,4 @@ Este projeto também usa o pacote `Express-Validator` para validação de dados 
 - Config
 - dotenv
 
-![Preview demo](https://github.com/LucasLuccaCode/api-restful-typescript/blob/main/docs/img/demo.png)
+![Preview demo](https://github.com/LucasLuccaCode/api-restful-typescript/blob/main/docs/img/demo-api.png)
