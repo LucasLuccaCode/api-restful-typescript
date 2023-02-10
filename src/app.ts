@@ -8,6 +8,7 @@ import routes from './routes'
 
 // middlewares
 import morganMiddleware from './middlewares/morganMiddleware'
+import handleErrorMiddleware from './middlewares/handleErrorMiddleware'
 
 // config
 import config from 'config'
@@ -41,6 +42,9 @@ db.once('open', () => {
 db.on('error', (error: Error) => {
   Logger.error(`connection error: ${error.message}`)
 })
+
+// global error handling
+app.use(handleErrorMiddleware)
 
 // server start
 app.on('logged', () => {
